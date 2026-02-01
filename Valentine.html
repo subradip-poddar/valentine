@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💖 Valentine Surprise 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  overflow: hidden;
+}
+
+/* ===== TERMINAL BOOT ===== */
+#terminal {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: #00ffcc;
+  font-family: monospace;
+  padding: 20px;
+  font-size: 16px;
+  z-index: 999;
+}
+
+.progress {
+  width: 100%;
+  background: #111;
+  margin-top: 10px;
+}
+.bar {
+  width: 0%;
+  height: 10px;
+  background: #00ffcc;
+}
+
+/* ===== HEARTS ===== */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* ===== CARD ===== */
+#card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: #ff4d6d;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  display: none;
+}
+
+button {
+  font-size: 18px;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#noBtn {
+  background: #eee;
+  color: #333;
+  position: fixed;
+}
+
+/* ===== CONFETTI ===== */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ===== FINAL ===== */
+.photos img {
+  width: 90px;
+  height: 90px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<!-- 🧑‍💻 TERMINAL -->
+<div id="terminal">
+  <div>> Initializing Valentine Protocol...</div>
+  <div>> Bypassing emotional firewall...</div>
+  <div>> Injecting love.exe ❤️</div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</div>
+
+<!-- 💖 CARD -->
+<div id="card">
+  <h1>Will you be my Valentine? 💕</h1>
+  <button id="yesBtn">Yes 😍</button>
+  <button id="noBtn">No 🙈</button>
+</div>
+
+<script>
+/* ===== TERMINAL BOOT ===== */
+let progress = 0;
+const bar = document.getElementById("bar");
+
+const boot = setInterval(() => {
+  progress += 5;
+  bar.style.width = progress + "%";
+  if (progress >= 100) {
+    clearInterval(boot);
+    document.getElementById("terminal").style.display = "none";
+    document.getElementById("card").style.display = "block";
+  }
+}, 120);
+
+/* ===== MUSIC ===== */
+document.body.addEventListener("click", () => {
+  document.getElementById("music").play();
+}, { once: true });
+
+/* ===== FLOATING HEARTS ===== */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = 16 + Math.random() * 20 + "px";
+  h.style.animationDuration = 3 + Math.random() * 4 + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 7000);
+}, 300);
+
+/* ===== NO BUTTON EVASION ===== */
+const noBtn = document.getElementById("noBtn");
+let scale = 1;
+
+function moveNo() {
+  scale -= 0.05;
+  noBtn.style.transform = `scale(${scale})`;
+
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+moveNo();
+
+/* ===== CONFETTI ===== */
+function confettiBlast() {
+  for (let i = 0; i < 150; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    c.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+
+/* ===== YES CLICK ===== */
+document.getElementById("yesBtn").onclick = () => {
+  confettiBlast();
+  document.getElementById("card").innerHTML = `
+    <h1>YAYYYYY 💘</h1>
+    <p>You just unlocked my heart 🥰</p>
+    <p>Happy Valentine’s Day ❤️</p>
+
+    <div class="photos">
+      <img src="photo1.jpg">
+      <img src="photo2.jpg">
+      <img src="photo3.jpg">
+    </div>
+
+    <p style="margin-top:15px;">
+      Forever yours 💕<br>
+      Now and always.
+    </p>
+  `;
+};
+</script>
+
+</body>
+</html>
