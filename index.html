@@ -103,10 +103,13 @@ button {
 
 /* ===== FINAL ===== */
 .photos img {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: auto;
+  max-height: 140px;
   border-radius: 15px;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
+  padding: 4px;
   margin: 6px;
 }
 </style>
@@ -222,3 +225,4 @@ document.getElementById("yesBtn").onclick = () => {
 
 </body>
 </html>
+
